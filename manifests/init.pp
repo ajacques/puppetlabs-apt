@@ -61,7 +61,7 @@ Explanation: We need a bogus package line because of Debian Bug #732746\n
 Package: bogus-package\n",
   }
 
-  if $always_apt_update == true {
+  if str2bool($always_apt_update) == true {
     Exec <| title=='apt_update' |> {
       refreshonly => false,
     }
@@ -111,7 +111,7 @@ Package: bogus-package\n",
     recurse => $purge_preferences_d,
   }
 
-  case $disable_keys {
+  case str2bool($disable_keys) {
     true: {
       file { '99unauth':
         ensure  => present,
