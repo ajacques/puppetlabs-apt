@@ -36,7 +36,8 @@ class apt(
   $purge_preferences_d  = false,
   $update_timeout       = undef,
   $update_tries         = undef,
-  $sources              = undef
+  $sources              = undef,
+  $install_recommended	= true
 ) {
 
   if $::osfamily != 'Debian' {
@@ -109,6 +110,16 @@ Package: bogus-package\n",
     group   => root,
     purge   => $purge_preferences_d,
     recurse => $purge_preferences_d,
+  }
+
+  case str2bool($install_recommended) {
+    false: {
+      file { '50norecommend':
+        ensure  => present,
+        content => "APT::Install-Recommends \"true\";\n",
+        path    => "${apt_conf_d}/50norecommend"
+      }
+    }
   }
 
   case str2bool($disable_keys) {
