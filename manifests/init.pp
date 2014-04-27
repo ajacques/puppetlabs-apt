@@ -115,7 +115,7 @@ Package: bogus-package\n",
   case str2bool($install_recommended) {
     false: {
       apt::conf {'norecommend':
-        content => "APT::Install-Recommends \"false";\n"
+        content => "APT::Install-Recommends \"false\";\n"
       }
     }
     true: {
