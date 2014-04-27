@@ -114,10 +114,13 @@ Package: bogus-package\n",
 
   case str2bool($install_recommended) {
     false: {
-      file { '50norecommend':
-        ensure  => present,
-        content => "APT::Install-Recommends \"true\";\n",
-        path    => "${apt_conf_d}/50norecommend"
+      apt::conf {'norecommend':
+        content => "APT::Install-Recommends \"false";\n"
+      }
+    }
+    true: {
+      apt::conf {'norecommend':
+        content => "APT::Install-Recommends \"true\";\n"
       }
     }
   }
